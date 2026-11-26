@@ -10,14 +10,14 @@ const handleRecipe= (e, onRecipeAdded) => {
     helper.hideError();
 
     const name = e.target.querySelector("#recipeName").value;
-    const age = e.target.querySelector("#recipeAge").value;
+    const ingredients = e.target.querySelector("#recipeIngredients").value;
 
-    if(!name || !age){
+    if(!name || !ingredients){
         helper.handleError("All fields are required!");
         return false;
     }
 
-    helper.sendPost(e.target.action, {name,age}, onRecipeAdded);
+    helper.sendPost(e.target.action, {name,ingredients}, onRecipeAdded);
     return false;
 }
 
@@ -32,8 +32,8 @@ const RecipeForm = (props) => {
         >
             <label htmlFor="name">Name: </label>
             <input id="recipeName" type="text" name="name" placeholder="Recipe Name"/>
-            <label htmlFor="age">Age: </label>
-            <input id="recipeAge" type="number" name="age" min="0"/>
+            <label htmlFor="ingredients">Ingredients: </label>
+            <input id="recipeIngredients" type="text" name="ingredients"  placeholder="Recipe Ingredients (comma seperated)"/>
             <input className="makeRecipeSubmit" type="submit" value="Make Recipe"/>
         </form>
     );
@@ -59,12 +59,18 @@ const RecipeList = (props) => {
         );
     }
 
+
     const recipeNodes = recipes.map(recipe => {
         return(
             <div key={recipe.id} className="recipe">
                 <img src="assets/img/domoface.jpeg" alt="recipe face" className="recipeFace"/>
                 <h3 className="recipeName">Name: {recipe.name}</h3>
-                <h3 className="recipeAge">Age: {recipe.age}</h3>
+                <h3 className="recipeIngredients">Ingredients:</h3>
+                <ul>
+                    {recipe.ingredients.map((ing) => (
+                        <li>{ing}</li>
+                    ))}
+                </ul>
                 <h3 className="recipeCreator">Created By: {recipe.creator}</h3>
             </div>
         );

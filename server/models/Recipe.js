@@ -10,9 +10,8 @@ const RecipeSchema = new mongoose.Schema({
         trim: true,
         set: setName,
     },
-    age: {
-        type: Number,
-        min: 0,
+    ingredients: {
+        type: [String],
         required: true,
     },
     owner: {
@@ -33,7 +32,7 @@ const RecipeSchema = new mongoose.Schema({
 
 RecipeSchema.statics.toAPI = (doc) => ({
     name: doc.name,
-    age: doc.age,
+    ingredients: doc.ingredients,
     creator: doc.creator,
 });
 
